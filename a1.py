@@ -31,6 +31,7 @@ def hours_difference(time_1, time_2):
     >>> hours_difference(1800.0, 1800.0)
     0.0
     """
+    return (time_2 - time_1) / 3600
 
 
 def to_float_hours(hours, minutes, seconds):
@@ -48,6 +49,7 @@ def to_float_hours(hours, minutes, seconds):
     >>> to_float_hours(1, 0, 36)
     1.01
     """
+    return float(hours + (minutes / 60) + (seconds / 3600))
 
 
 def to_24_hour_clock(hours):
@@ -74,12 +76,47 @@ def to_24_hour_clock(hours):
 
 
 # Write your get_hours function definition here:
+def get_hours(seconds):
+    """ (int) -> int
+
+    The parameter is a number of seconds since
+    midnight. Return the number of hours
+    that have lapsed since midnight,
+    as seen on a 24-hour clock.
+
+    >>> get_hours(3800)
+    1
+        """
+    return to_24_hour_clock(seconds // 3600)
 
 
 # Write your get_minutes function definition here:
+def get_minutes(seconds):
+    """(int) -> int
 
+    The parameter is a number of seconds since midnight
+    Return the number of minutes that have elapsed
+    since midnight as seen on a clock
+
+    >>> get_minutes(3800)
+    3
+    """
+    return (seconds - (get_hours(seconds) * 3600)) // 60
 
 # Write your get_seconds function definition here:
+
+
+def get_seconds(seconds):
+    """(int) -> (int)
+
+    The parameter is a number of seconds since
+    midnight. Return the number of seconds that have
+    elapsed since midnight as seen on a clock
+
+    >>> get_seconds(3800)
+    20
+    """
+    return (seconds - ((get_hours(seconds) * 3600) + (get_minutes(seconds) * 60)))
 
 
 def time_to_utc(utc_offset, time):
@@ -101,6 +138,7 @@ def time_to_utc(utc_offset, time):
     >>> time_to_utc(-1, 23.0)
     0.0
     """
+    return to_24_hour_clock(abs(float(utc_offset) - time))
 
 
 def time_from_utc(utc_offset, time):
@@ -125,3 +163,4 @@ def time_from_utc(utc_offset, time):
     >>> time_from_utc(+1, 23.0)
     0.0
     """
+    return to_24_hour_clock(float(utc_offset) + time)
